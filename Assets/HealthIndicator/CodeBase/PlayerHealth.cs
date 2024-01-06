@@ -18,15 +18,8 @@ public class PlayerHealth : MonoBehaviour
         HealthChanged?.Invoke(_current);
     }
 
-    public void ChangeHealth(int health)
+    public void Heal(int health)
     {
-        if (_current <= 0)
-        {
-            _current = 0;
-            HealthChanged?.Invoke(_current);
-            return;
-        }
-
         if (_current > _max)
         {
             _current = _max;
@@ -36,6 +29,21 @@ public class PlayerHealth : MonoBehaviour
 
         if (_current == _max && health > 0)
             return;
+
+        ChangeHealth(health);
+    }
+
+    public void TakeDamage(int health) => 
+        ChangeHealth(-health);
+
+    public void ChangeHealth(int health)
+    {
+        if (_current <= 0)
+        {
+            _current = 0;
+            HealthChanged?.Invoke(_current);
+            return;
+        }
 
         _current += health;
 
